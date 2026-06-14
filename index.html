@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapas Kumar Behera — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0F1E;
+    --bg2: #0F1628;
+    --card: #111827;
+    --card2: #151e30;
+    --cyan: #00D4FF;
+    --cyan2: #00A8CC;
+    --white: #E8F4FF;
+    --slate: #8899AA;
+    --accent2: #7C3AED;
+    --green: #10B981;
+    --orange: #F59E0B;
+    --border: rgba(0,212,255,0.12);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--white); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,15,30,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--cyan); letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.875rem; font-weight: 500; font-family: var(--font-display); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 0.45rem 1.1rem; border-radius: 6px; font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s, color 0.2s; }
+  .nav-cta:hover { background: var(--cyan); color: var(--bg); }
+
+  /* HERO */
+  #hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 80px; }
+  #dataCanvas { position: absolute; inset: 0; z-index: 0; opacity: 0.5; }
+  .hero-content { position: relative; z-index: 1; text-align: center; max-width: 860px; padding: 2rem; }
+  .hero-eyebrow { font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem; }
+  .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 30px; height: 1px; background: var(--cyan); opacity: 0.5; }
+  h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  h1 .highlight { background: linear-gradient(135deg, var(--cyan), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 1.1rem; color: var(--slate); max-width: 580px; margin: 1.4rem auto 2.5rem; line-height: 1.75; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, var(--cyan), var(--cyan2)); color: var(--bg); padding: 0.8rem 2rem; border-radius: 8px; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; text-decoration: none; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 24px rgba(0,212,255,0.25); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,212,255,0.4); }
+  .btn-secondary { background: transparent; border: 1px solid rgba(232,244,255,0.2); color: var(--white); padding: 0.8rem 2rem; border-radius: 8px; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .btn-secondary:hover { border-color: var(--cyan); background: rgba(0,212,255,0.05); }
+  .hero-stats { margin-top: 4rem; display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--cyan); }
+  .stat-label { font-size: 0.78rem; color: var(--slate); margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { margin-bottom: 3.5rem; }
+  .section-eyebrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  h2 em { font-style: normal; color: var(--cyan); }
+  .section-desc { color: var(--slate); margin-top: 0.75rem; max-width: 520px; }
+
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: center; }
+  .about-img-wrap { position: relative; }
+  .about-avatar { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--card), var(--card2)); border-radius: 20px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 7rem; position: relative; overflow: hidden; }
+  .about-avatar::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 30%, rgba(0,212,255,0.08), transparent 60%); }
+  .about-badge { position: absolute; bottom: -14px; right: -14px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem 1.2rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; }
+  .about-badge .dot { color: var(--green); margin-right: 0.4rem; }
+  .about-text p { color: var(--slate); line-height: 1.8; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--white); }
+  .skills-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .tag { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.18); color: var(--cyan); padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.78rem; font-family: var(--font-mono); }
+
+  /* CERTIFICATIONS */
+  #certs { background: var(--bg); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.25rem; }
+  .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; transition: transform 0.2s, border-color 0.2s; }
+  .cert-card:hover { transform: translateY(-3px); border-color: rgba(0,212,255,0.3); }
+  .cert-icon { font-size: 2rem; flex-shrink: 0; }
+  .cert-body h4 { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .cert-body p { font-size: 0.78rem; color: var(--slate); line-height: 1.5; }
+  .cert-badge { display: inline-block; margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 100px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); color: var(--cyan); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; cursor: pointer; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .project-card:hover { transform: translateY(-5px); border-color: rgba(0,212,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.2rem; }
+  .project-card h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .project-card p { color: var(--slate); font-size: 0.875rem; line-height: 1.7; }
+  .project-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .chip { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25); color: #A78BFA; padding: 0.25rem 0.65rem; border-radius: 100px; font-size: 0.72rem; font-family: var(--font-mono); }
+  .chip.green { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.25); color: #6EE7B7; }
+  .chip.orange { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: #FCD34D; }
+  .chip.cyan { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.25); color: var(--cyan); }
+  .project-links { margin-top: 1.5rem; display: flex; gap: 0.75rem; }
+  .link-btn { font-size: 0.8rem; font-family: var(--font-display); font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius: 6px; transition: background 0.2s; }
+  .link-btn.primary { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.25); }
+  .link-btn.primary:hover { background: rgba(0,212,255,0.2); }
+  .link-btn.ghost { color: var(--slate); border: 1px solid rgba(255,255,255,0.1); }
+  .link-btn.ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+  /* FEATURED */
+  .featured-card { grid-column: 1 / -1; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; overflow: hidden; transition: border-color 0.3s; }
+  .featured-card:hover { border-color: rgba(0,212,255,0.3); }
+  .featured-card::after { content: ''; position: absolute; right: -80px; top: -80px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%); pointer-events: none; }
+  .featured-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .featured-card h3 { font-family: var(--font-display); font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .featured-card p { color: var(--slate); line-height: 1.8; margin-bottom: 1.5rem; }
+  .featured-viz { background: var(--bg); border-radius: 14px; padding: 1.5rem; border: 1px solid var(--border); }
+  .bar-chart { display: flex; flex-direction: column; gap: 0.85rem; }
+  .bar-row { display: flex; align-items: center; gap: 0.75rem; }
+  .bar-label { font-size: 0.72rem; color: var(--slate); width: 80px; text-align: right; font-family: var(--font-mono); }
+  .bar-track { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); }
+  .bar-val { font-size: 0.72rem; color: var(--cyan); font-family: var(--font-mono); width: 40px; }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s, border-color 0.2s; }
+  .skill-card:hover { transform: translateY(-3px); border-color: rgba(0,212,255,0.25); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
+  .skill-card h4 { font-family: var(--font-display); font-weight: 600; margin-bottom: 0.4rem; }
+  .skill-card p { font-size: 0.82rem; color: var(--slate); line-height: 1.6; }
+  .skill-bar { margin-top: 1rem; background: rgba(255,255,255,0.06); border-radius: 4px; height: 4px; }
+  .skill-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--cyan), var(--accent2)); }
+
+  /* BLOG */
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .blog-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; cursor: pointer; }
+  .blog-card:hover { transform: translateY(-5px); border-color: rgba(0,212,255,0.3); }
+  .blog-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+  .blog-body { padding: 1.5rem; }
+  .blog-cat { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+  .blog-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; line-height: 1.4; margin-bottom: 0.6rem; }
+  .blog-card p { color: var(--slate); font-size: 0.82rem; line-height: 1.6; }
+  .blog-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; }
+  .blog-date { font-size: 0.75rem; color: var(--slate); font-family: var(--font-mono); }
+  .read-more { font-size: 0.75rem; color: var(--cyan); font-weight: 600; font-family: var(--font-display); }
+
+  /* CONTACT */
+  #contact { background: var(--bg2); }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info p { color: var(--slate); line-height: 1.8; margin: 1rem 0 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--white); background: var(--card); border: 1px solid var(--border); padding: 1rem 1.2rem; border-radius: 12px; transition: border-color 0.2s, transform 0.2s; font-family: var(--font-display); font-size: 0.9rem; }
+  .contact-link:hover { border-color: rgba(0,212,255,0.35); transform: translateX(4px); }
+  .contact-link-icon { font-size: 1.3rem; width: 36px; text-align: center; }
+  .contact-link-text { font-size: 0.75rem; color: var(--slate); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label { font-size: 0.8rem; color: var(--slate); font-family: var(--font-display); font-weight: 500; }
+  .form-group input, .form-group textarea { background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 0.85rem 1rem; border-radius: 10px; font-family: var(--font-body); font-size: 0.9rem; resize: vertical; outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group textarea:focus { border-color: rgba(0,212,255,0.5); }
+  .form-group textarea { min-height: 130px; }
+  .form-submit { background: linear-gradient(135deg, var(--cyan), var(--cyan2)); color: var(--bg); padding: 0.9rem; border-radius: 10px; border: none; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; transition: opacity 0.2s, transform 0.2s; }
+  .form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--slate); font-size: 0.82rem; }
+  footer span { color: var(--cyan); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .about-grid, .contact-wrap, .featured-card { grid-template-columns: 1fr; }
+    .featured-card { padding: 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tapas<span>.dev</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="dataCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Data Analyst · Python · SQL · Power BI</div>
+    <h1>Hi, I'm <span class="highlight">Tapas Kumar Behera</span></h1>
+    <p class="hero-sub">A certified Data Analyst passionate about transforming raw data into meaningful insights. I build dashboards, analyze trends, and tell stories with data — turning numbers into decisions.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Projects</a>
+      <a href="https://github.com/tapas-tech29" target="_blank" class="btn-secondary">GitHub Profile</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Fresher</div>
+        <div class="stat-label">Ready to Contribute</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Passion for Data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-avatar">📊</div>
+        <div class="about-badge"><span class="dot">●</span> Open to Opportunities</div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-eyebrow">About Me</div>
+        <h2>Turning Data into <em>Clarity</em></h2>
+        <p>I'm <strong>Tapas Kumar Behera</strong>, a certified Data Analyst from India with a strong foundation in statistics, data wrangling, and visual storytelling. I've completed rigorous training in data analytics and data science, and I've applied that knowledge across 5+ hands-on projects.</p>
+        <p>I love working with <strong>Python, SQL, and Power BI</strong> to dig into datasets, spot patterns, and build dashboards that make complex information easy to understand. I'm a fresher eager to bring energy, curiosity, and analytical thinking to a data-driven team.</p>
+        <p>I believe <strong>data is the most powerful tool</strong> we have to understand the world — and I'm here to make the most of it.</p>
+        <div class="skills-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">Seaborn</span>
+          <span class="tag">SQL</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Statistics</span>
+          <span class="tag">Probability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Education & Credentials</div>
+      <h2>Certifications & <em>Training</em></h2>
+      <p class="section-desc">Formal credentials that back up my analytical skills.</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-body">
+          <h4>Complete Data Analyst Program</h4>
+          <p>Comprehensive training covering Python, SQL, Power BI, Statistics, and real-world project work.</p>
+          <span class="cert-badge">Skill Circle, Noida · Certified</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-body">
+          <h4>Data Science Essentials with Python</h4>
+          <p>Covered data manipulation, visualization, and foundational machine learning concepts using Python.</p>
+          <span class="cert-badge">Cisco Certified</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🤖</div>
+        <div class="cert-body">
+          <h4>Youth for AI (YULL)</h4>
+          <p>AI awareness and application course covering core AI concepts, tools, and responsible AI practices.</p>
+          <span class="cert-badge">NASSCOM Certified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Portfolio</div>
+      <h2>Projects & <em>Case Studies</em></h2>
+      <p class="section-desc">5+ end-to-end analytical projects — from raw data to actionable dashboards.</p>
+    </div>
+    <div class="projects-grid">
+
+      <!-- FEATURED -->
+      <div class="featured-card reveal">
+        <div>
+          <div class="featured-label">⭐ Featured Project</div>
+          <h3>Zomato Restaurant Analytics Dashboard</h3>
+          <p>An end-to-end Power BI dashboard analyzing Zomato restaurant data across cities. Explored ratings, cuisine popularity, cost distribution, and delivery trends to uncover what makes a restaurant successful.</p>
+          <div class="project-meta">
+            <span class="chip orange">Power BI</span>
+            <span class="chip green">Python</span>
+            <span class="chip">Pandas</span>
+            <span class="chip cyan">Data Cleaning</span>
+          </div>
+          <div class="project-links" style="margin-top:1.5rem;">
+            <a href="https://github.com/tapas-tech29/Zomato-Restaurant-Analytics-Dashboard-Power-Bi" target="_blank" class="link-btn primary">View on GitHub →</a>
+          </div>
+        </div>
+        <div class="featured-viz">
+          <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--slate);margin-bottom:1rem;">Top Cuisines by Popularity</div>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label">North Indian</div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,#00D4FF,#7C3AED)" data-width="88%"></div></div>
+              <div class="bar-val">88%</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Chinese</div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,#10B981,#00D4FF)" data-width="74%"></div></div>
+              <div class="bar-val">74%</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Fast Food</div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,#F59E0B,#10B981)" data-width="61%"></div></div>
+              <div class="bar-val">61%</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">South Indian</div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,#EC4899,#7C3AED)" data-width="49%"></div></div>
+              <div class="bar-val">49%</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Mughlai</div>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,#7C3AED,#00D4FF)" data-width="33%"></div></div>
+              <div class="bar-val">33%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 1 -->
+      <div class="project-card reveal">
+        <div class="project-icon" style="background:rgba(0,212,255,0.08)">🐍</div>
+        <h3>Python EDA — Sales Dataset</h3>
+        <p>Performed exploratory data analysis on a retail sales dataset using Pandas, NumPy, Matplotlib, and Seaborn. Identified seasonal trends, top-performing categories, and customer segments.</p>
+        <div class="project-meta">
+          <span class="chip green">Python</span>
+          <span class="chip">Seaborn</span>
+          <span class="chip">Matplotlib</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/tapas-tech29" target="_blank" class="link-btn primary">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="project-card reveal">
+        <div class="project-icon" style="background:rgba(124,58,237,0.1)">🗄️</div>
+        <h3>SQL Business Insights</h3>
+        <p>Wrote complex SQL queries using JOINs, subqueries, CTEs, and window functions to analyze business KPIs on a multi-table MySQL database. Produced insights on revenue, retention, and performance.</p>
+        <div class="project-meta">
+          <span class="chip">MySQL</span>
+          <span class="chip cyan">SQL</span>
+          <span class="chip green">Analytics</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/tapas-tech29" target="_blank" class="link-btn primary">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="project-card reveal">
+        <div class="project-icon" style="background:rgba(16,185,129,0.1)">📈</div>
+        <h3>Statistical Analysis Project</h3>
+        <p>Applied descriptive and inferential statistics — probability distributions, hypothesis testing, and correlation analysis — to draw meaningful conclusions from real-world datasets.</p>
+        <div class="project-meta">
+          <span class="chip orange">Statistics</span>
+          <span class="chip">Python</span>
+          <span class="chip">NumPy</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/tapas-tech29" target="_blank" class="link-btn primary">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="project-card reveal">
+        <div class="project-icon" style="background:rgba(245,158,11,0.08)">📊</div>
+        <h3>Power BI Sales Dashboard</h3>
+        <p>Built an interactive Power BI dashboard with slicers, drill-throughs, and DAX measures to visualize sales performance, regional breakdowns, and month-over-month growth trends.</p>
+        <div class="project-meta">
+          <span class="chip orange">Power BI</span>
+          <span class="chip">DAX</span>
+          <span class="chip cyan">Visualization</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/tapas-tech29" target="_blank" class="link-btn primary">GitHub →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Expertise</div>
+      <h2>Tools & <em>Technologies</em></h2>
+      <p class="section-desc">The stack I use to wrangle, analyze, and visualize data.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">📐</div>
+        <h4>Statistics & Probability</h4>
+        <p>Descriptive stats, probability distributions, hypothesis testing, correlation & regression analysis</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐍</div>
+        <h4>Python</h4>
+        <p>Data analysis scripts, automation, data cleaning, and visualization pipelines</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📦</div>
+        <h4>Python Libraries</h4>
+        <p>Pandas, NumPy, Matplotlib, Pyplot, Seaborn — full EDA and visualization workflow</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🗄️</div>
+        <h4>SQL & MySQL</h4>
+        <p>Joins, subqueries, CTEs, window functions, stored procedures, database design</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📊</div>
+        <h4>Power BI</h4>
+        <p>Interactive dashboards, DAX formulas, data modeling, slicers, drill-throughs, KPIs</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <h4>AI & Data Science</h4>
+        <p>Foundational ML concepts, data science with Python, AI tools and responsible AI practices</p>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Writing</div>
+      <h2>Latest <em>Blog Posts</em></h2>
+      <p class="section-desc">Sharing what I learn about data, analytics, and the journey of becoming a data analyst.</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-thumb" style="background:linear-gradient(135deg,#0F1A35,#1A2850)">🐍</div>
+        <div class="blog-body">
+          <div class="blog-cat" style="color:var(--cyan)">Python & Pandas</div>
+          <h3>5 Pandas Functions I Use in Every Data Analysis Project</h3>
+          <p>From groupby to pivot_table — the functions that make data wrangling fast and readable.</p>
+          <div class="blog-meta">
+            <span class="blog-date">2025</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-thumb" style="background:linear-gradient(135deg,#15102E,#231545)">📊</div>
+        <div class="blog-body">
+          <div class="blog-cat" style="color:#A78BFA">Power BI</div>
+          <h3>How I Built My First Power BI Dashboard From Scratch</h3>
+          <p>A beginner-friendly walkthrough of data modeling, DAX measures, and designing dashboards that actually make sense.</p>
+          <div class="blog-meta">
+            <span class="blog-date">2025</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-thumb" style="background:linear-gradient(135deg,#0F1F18,#0C2E22)">🗄️</div>
+        <div class="blog-body">
+          <div class="blog-cat" style="color:var(--green)">SQL</div>
+          <h3>SQL Window Functions Explained Simply — With Real Examples</h3>
+          <p>RANK, ROW_NUMBER, LAG, LEAD — demystified with straightforward examples any analyst can follow.</p>
+          <div class="blog-meta">
+            <span class="blog-date">2025</span>
+            <span class="read-more">Read →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <div class="section-eyebrow">Get In Touch</div>
+        <h2>Let's Connect &<br><em>Build Together</em></h2>
+        <p>I'm actively looking for Data Analyst opportunities. If you're hiring or want to collaborate on a data project, I'd love to hear from you!</p>
+        <div class="contact-links">
+          <a href="https://github.com/tapas-tech29" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🐙</span>
+            <div>
+              <div>github.com/tapas-tech29</div>
+              <div class="contact-link-text">See all my projects</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/tapas-kumar-behera-670813239/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">💼</span>
+            <div>
+              <div>linkedin.com/in/tapas-kumar-behera</div>
+              <div class="contact-link-text">Connect professionally</div>
+            </div>
+          </a>
+          <a href="mailto:tapas29122003@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉️</span>
+            <div>
+              <div>tapas29122003@gmail.com</div>
+              <div class="contact-link-text">Drop me an email</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" 
+      action="https://formspree.io/f/mrevreeo" 
+      method="POST">
+  <div class="form-group">
+    <label>Your Name</label>
+    <input type="text" name="name" 
+           placeholder="Your name" required>
+  </div>
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" name="email" 
+           placeholder="you@company.com" required>
+  </div>
+  <div class="form-group">
+    <label>Message</label>
+    <textarea name="message" 
+      placeholder="Hi Tapas, I'd love to discuss..." 
+      required></textarea>
+  </div>
+  <button type="submit" class="form-submit">
+    Send Message →
+  </button>
+</form>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Hi Tapas, I'd love to discuss a data analyst opportunity..."></textarea>
+        </div>
+        <button class="form-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & built by <span>Tapas Kumar Behera</span> · 2025 · Data Analyst · Open to Opportunities</p>
+</footer>
+
+<script>
+// CANVAS DATA GRID
+const canvas = document.getElementById('dataCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, cols, rows, grid = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  cols = Math.floor(W / 40);
+  rows = Math.floor(H / 40);
+  grid = [];
+  for (let i = 0; i < cols * rows; i++) {
+    grid.push({ speed: 0.002 + Math.random() * 0.006, phase: Math.random() * Math.PI * 2 });
+  }
+}
+
+let t = 0;
+function drawGrid() {
+  ctx.clearRect(0, 0, W, H);
+  t += 0.012;
+  const cw = W / cols, ch = H / rows;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = grid[r * cols + c];
+      const val = (Math.sin(t * cell.speed * 80 + cell.phase + c * 0.3 + r * 0.2) + 1) / 2;
+      const x = c * cw + cw / 2, y = r * ch + ch / 2;
+      ctx.beginPath();
+      ctx.arc(x, y, val * 2.5 + 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,212,255,${val * 0.55 + 0.05})`;
+      ctx.fill();
+      if (val > 0.6 && c < cols - 1) {
+        const nv = (Math.sin(t * grid[r * cols + c + 1].speed * 80 + grid[r * cols + c + 1].phase + (c+1) * 0.3 + r * 0.2) + 1) / 2;
+        if (nv > 0.6) {
+          ctx.beginPath();
+          ctx.moveTo(x, y); ctx.lineTo((c + 1) * cw + cw / 2, y);
+          ctx.strokeStyle = `rgba(0,212,255,${(val + nv) * 0.07})`;
+          ctx.lineWidth = 0.6; ctx.stroke();
+        }
+      }
+    }
+  }
+  const labels = ['SELECT *','∑ revenue','GROUP BY','p < 0.05','INNER JOIN','μ = 42.3','σ²','R² = 0.91','Pandas','Power BI'];
+  labels.forEach((lbl, i) => {
+    const x = (W * 0.05) + ((i * 179) % (W * 0.88));
+    const y = 80 + (i * 99 + t * 7) % (H * 0.9);
+    ctx.font = '11px JetBrains Mono, monospace';
+    ctx.fillStyle = `rgba(0,212,255,${0.07 + (i % 3) * 0.04})`;
+    ctx.fillText(lbl, x, y);
+  });
+  requestAnimationFrame(drawGrid);
+}
+window.addEventListener('resize', resize);
+resize(); drawGrid();
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+// BAR CHART ANIMATION
+const barIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width; }, 400);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.featured-card').forEach(el => barIO.observe(el));
+</script>
+</body>
+</html>
